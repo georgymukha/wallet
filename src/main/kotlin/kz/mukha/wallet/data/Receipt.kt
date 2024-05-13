@@ -4,7 +4,9 @@ import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import kz.mukha.wallet.serializers.BigDecimalSerializer
 import kz.mukha.wallet.serializers.LocalDateTimeSerializer
+import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Serializable
@@ -42,11 +44,14 @@ data class Ticket(
     @Serializable(with = LocalDateTimeSerializer::class)
     val linkedKkmRequestTime: LocalDateTime?,
     val domain: Domain,
-    val totalSum: Double,
+    @Serializable(with = BigDecimalSerializer::class)
+    val totalSum: BigDecimal,
     val operationType: Int,
     val operator: Operator,
-    val takenSum: Double,
-    val changeSum: Double,
+    @Serializable(with = BigDecimalSerializer::class)
+    val takenSum: BigDecimal,
+    @Serializable(with = BigDecimalSerializer::class)
+    val changeSum: BigDecimal,
     val items: List<Item>,
     val payments: List<Payment>,
     val taxes: List<Tax?>,
@@ -84,10 +89,13 @@ data class Item(
 
 @Serializable
 data class Commodity(
-    val sum: Double,
+    @Serializable(with = BigDecimalSerializer::class)
+    val sum: BigDecimal,
     val sectionCode: String,
-    val quantity: Double,
-    val price: Double,
+    @Serializable(with = BigDecimalSerializer::class)
+    val quantity: BigDecimal,
+    @Serializable(with = BigDecimalSerializer::class)
+    val price: BigDecimal,
     val exciseStamp: String,
     val physicalLabel: String,
     val productId: String,
@@ -101,7 +109,8 @@ data class Commodity(
 
 @Serializable
 data class Tax(
-    val sum: Double,
+    @Serializable(with = BigDecimalSerializer::class)
+    val sum: BigDecimal,
     val inTotalSum: Boolean,
     val layout: TaxLayout
 )
@@ -114,14 +123,16 @@ data class TaxLayout(
 
 @Serializable
 data class TaxTotal(
-    val sum: Double,
+    @Serializable(with = BigDecimalSerializer::class)
+    val sum: BigDecimal,
     val rate: Double,
     val name: String
 )
 
 @Serializable
 data class Payment(
-    val sum: Double,
+    @Serializable(with = BigDecimalSerializer::class)
+    val sum: BigDecimal,
     val paymentType: String
 )
 

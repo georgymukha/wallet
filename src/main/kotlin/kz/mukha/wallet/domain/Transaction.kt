@@ -11,7 +11,6 @@ import java.util.UUID
 data class Transaction(
     val transactionId: UUID,
     val walletId: UUID,
-    val amount: BigDecimal,
     val operationType: OperationType,
     val description: String?,
     val transactionDate: LocalDateTime,
@@ -29,7 +28,6 @@ fun Receipt.toTransaction(walletId: UUID): Transaction {
     return Transaction(
         transactionId = UUID.randomUUID(),
         walletId = walletId,
-        amount = this.ticket.totalSum.toBigDecimal(),
         operationType = if (this.ticket.operationType == 2) OperationType.EXPENSE else OperationType.INCOME,
         description = this.ticketDescription,
         transactionDate = this.ticket.transactionDate,
@@ -40,7 +38,7 @@ fun Receipt.toTransaction(walletId: UUID): Transaction {
         foundDate = this.foundDate,
         kkmFnsId = this.kkmFnsId,
         fiscalId = this.ticket.fiscalId,
-        totalSum = this.ticket.totalSum.toBigDecimal(),
+        totalSum = this.ticket.totalSum,
     )
 }
 
@@ -63,10 +61,9 @@ fun Receipt.toItems(transactionId: UUID): List<TransactionItem> {
             transactionItemId = UUID.randomUUID(),
             transactionId = transactionId,
             itemType = itemType!!,
-            // TODO: нужно добавить сериализаторы BigDecimal и избавиться от приведения типов
-            commoditySum = it.commodity.sum.toBigDecimal(),
-            quantity = it.commodity.quantity.toBigDecimal(),
-            price = it.commodity.price.toBigDecimal(),
+            commoditySum = it.commodity.sum,
+            quantity = it.commodity.quantity,
+            price = it.commodity.price,
             itemName = it.commodity.name,
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),

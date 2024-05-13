@@ -47,22 +47,22 @@ class WalletApplicationTests {
 				linkedKkmRequestId=null,
 				linkedKkmRequestTime=null,
 				domain= Domain(domainType=0),
-				totalSum=2580.0,
+				totalSum="2580.000".toBigDecimal(),
 				operationType=2,
 				operator= Operator(code=9, name="Касса 1у"),
-				takenSum=0.0,
-				changeSum=0.0,
+				takenSum="0.000".toBigDecimal(),
+				changeSum="0.000".toBigDecimal(),
 				items= listOf(
-					Item(itemType=1, commodity= Commodity(sum=1290.0, sectionCode="1", quantity=1.00, price=1290.0,exciseStamp="", physicalLabel="", productId="0", barcode=null, measureUnitCode="796", code=0, taxes=listOf(Tax(sum=138.21, inTotalSum=true, layout= TaxLayout(type="НДС", rate=0.12))), name="Штрих мебельный (блистер), Белый, 002")),
-					Item(itemType=1, commodity=Commodity(sum=1290.0, sectionCode="1", quantity=1.00, price=1290.0, exciseStamp="", physicalLabel="", productId="0", barcode=null, measureUnitCode="796", code=0, taxes=listOf(Tax(sum=138.21, inTotalSum=true, layout=TaxLayout(type="НДС", rate=0.12))), name="Паста реставрационная (блистер), Белый, 002"))
+					Item(itemType=1, commodity= Commodity(sum="1290.000".toBigDecimal(), sectionCode="1", quantity="1.000".toBigDecimal(), price="1290.000".toBigDecimal(),exciseStamp="", physicalLabel="", productId="0", barcode=null, measureUnitCode="796", code=0, taxes=listOf(Tax(sum="138.210".toBigDecimal(), inTotalSum=true, layout= TaxLayout(type="НДС", rate=0.12))), name="Штрих мебельный (блистер), Белый, 002")),
+					Item(itemType=1, commodity=Commodity(sum="1290.000".toBigDecimal(), sectionCode="1", quantity="1.000".toBigDecimal(), price="1290.000".toBigDecimal(), exciseStamp="", physicalLabel="", productId="0", barcode=null, measureUnitCode="796", code=0, taxes=listOf(Tax(sum="138.210".toBigDecimal(), inTotalSum=true, layout=TaxLayout(type="НДС", rate=0.12))), name="Паста реставрационная (блистер), Белый, 002"))
 				),
-				payments= listOf(Payment(sum=2580.0, paymentType="CARD")),
+				payments= listOf(Payment(sum="2580.000".toBigDecimal(), paymentType="CARD")),
 				taxes= listOf(), shiftDocumentNumber=null, requestPayload=null, payload=null),
 			ticketDescription="transaction.ticket.sell, transaction.ticket.payment.type.card",
 			orgTitle="ТОВАРИЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"МЕГАСТРОЙ АСТАНА DIY\"", orgId="090840015598",
 			retailPlaceAddress="р-он Байконыр, Альмухана Сембинова 19/1", kkmSerialNumber="SWK00100844",
 			kkmFnsId="010100344201", foundDate=LocalDateTime.parse("2024-05-12T13:21:31.041"),
-			taxesTotal= listOf(TaxTotal(sum=276.42, rate=0.12, name="")), totalDiscount=0.0, totalMarkup=0.0,
+			taxesTotal= listOf(TaxTotal(sum="276.420".toBigDecimal(), rate=0.12, name="")), totalDiscount=0.0, totalMarkup=0.0,
 			measureUnits= mapOf("796" to "шт "), isForAnon=true
 		)
 
@@ -94,29 +94,29 @@ class WalletApplicationTests {
 				linkedKkmRequestId=null,
 				linkedKkmRequestTime=null,
 				domain= Domain(domainType=0),
-				totalSum=2580.0,
+				totalSum="2580.000".toBigDecimal(),
 				operationType=2,
 				operator= Operator(code=9, name="Касса 1у"),
-				takenSum=0.0,
-				changeSum=0.0,
+				takenSum="0".toBigDecimal(),
+				changeSum="0".toBigDecimal(),
 				items= listOf(
-					Item(itemType=1, commodity= Commodity(sum=1290.0, sectionCode="1", quantity=1.00, price=1290.0,exciseStamp="", physicalLabel="", productId="0", barcode=null, measureUnitCode="796", code=0, taxes=listOf(Tax(sum=138.21, inTotalSum=true, layout= TaxLayout(type="НДС", rate=0.12))), name="Штрих мебельный (блистер), Белый, 002")),
-					Item(itemType=1, commodity=Commodity(sum=1290.0, sectionCode="1", quantity=1.00, price=1290.0, exciseStamp="", physicalLabel="", productId="0", barcode=null, measureUnitCode="796", code=0, taxes=listOf(Tax(sum=138.21, inTotalSum=true, layout=TaxLayout(type="НДС", rate=0.12))), name="Паста реставрационная (блистер), Белый, 002"))
+					Item(itemType=1, commodity= Commodity(sum="1290.000".toBigDecimal(), sectionCode="1", quantity="1.000".toBigDecimal(), price="1290.000".toBigDecimal(), exciseStamp="", physicalLabel="", productId="0", barcode=null, measureUnitCode="796", code=0, taxes=listOf(Tax(sum="138.210".toBigDecimal(), inTotalSum=true, layout= TaxLayout(type="НДС", rate=0.12))), name="Штрих мебельный (блистер), Белый, 002")),
+					Item(itemType=1, commodity=Commodity(sum="1290.000".toBigDecimal(), sectionCode="1", quantity="1.000".toBigDecimal(), price="1290.000".toBigDecimal(), exciseStamp="", physicalLabel="", productId="0", barcode=null, measureUnitCode="796", code=0, taxes=listOf(Tax(sum="138.210".toBigDecimal(), inTotalSum=true, layout=TaxLayout(type="НДС", rate=0.12))), name="Паста реставрационная (блистер), Белый, 002"))
 				),
-				payments= listOf(Payment(sum=2580.0, paymentType="CARD")),
+				payments= listOf(Payment(sum="2580.000".toBigDecimal(), paymentType="CARD")),
 				taxes= listOf(), shiftDocumentNumber=null, requestPayload=null, payload=null),
 			ticketDescription="transaction.ticket.sell, transaction.ticket.payment.type.card",
 			orgTitle="ТОВАРИЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"МЕГАСТРОЙ АСТАНА DIY\"", orgId="090840015598",
 			retailPlaceAddress="р-он Байконыр, Альмухана Сембинова 19/1", kkmSerialNumber="SWK00100844",
 			kkmFnsId="010100344201", foundDate=LocalDateTime.parse("2024-05-12T13:21:31.041"),
-			taxesTotal= listOf(TaxTotal(sum=276.42, rate=0.12, name="")), totalDiscount=0.0, totalMarkup=0.0,
+			taxesTotal= listOf(TaxTotal(sum="276.420".toBigDecimal(), rate=0.12, name="")), totalDiscount=0.0, totalMarkup=0.0,
 			measureUnits= mapOf("796" to "шт "), isForAnon=true
 		)
 
 		val expectedDto = ReceiptDto(
 			id= UUID.fromString("1e585134-9b06-4739-ac8d-caaa4c2a9343"), ticket=
-			TicketDto(transactionDate= LocalDateTime.parse("2024-05-11T13:35:02"), fiscalId="2173254610", totalSum=2580.0, operationType=2, items= listOf(ItemDto(itemType=1, commodity= CommodityDto(sum=1290.0, quantity=1.0, price=1290.0, name="Штрих мебельный (блистер), Белый, 002")), ItemDto(itemType=1, commodity=CommodityDto(sum=1290.0, quantity=1.0, price=1290.0, name="Паста реставрационная (блистер), Белый, 002"))),
-				payments= listOf(PaymentDto(sum=2580.0, paymentType= PaymentTypeEnum.CARD))
+			TicketDto(transactionDate= LocalDateTime.parse("2024-05-11T13:35:02"), fiscalId="2173254610", totalSum="2580.000".toBigDecimal(), operationType=2, items= listOf(ItemDto(itemType=1, commodity= CommodityDto(sum="1290.000".toBigDecimal(), quantity="1.000".toBigDecimal(), price="1290.000".toBigDecimal(), name="Штрих мебельный (блистер), Белый, 002")), ItemDto(itemType=1, commodity=CommodityDto(sum="1290.000".toBigDecimal(), quantity="1.000".toBigDecimal(), price="1290.000".toBigDecimal(), name="Паста реставрационная (блистер), Белый, 002"))),
+				payments= listOf(PaymentDto(sum="2580.000".toBigDecimal(), paymentType= PaymentTypeEnum.CARD))
 			),
 			orgTitle="ТОВАРИЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"МЕГАСТРОЙ АСТАНА DIY\"", retailPlaceAddress="р-он Байконыр, Альмухана Сембинова 19/1", foundDate= LocalDateTime.parse("2024-05-12T13:21:31.041"), kkmFnsId="010100344201"
 		)

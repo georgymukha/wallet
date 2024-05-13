@@ -71,11 +71,6 @@ public class Transactions extends TableImpl<TransactionsRecord> {
     public final TableField<TransactionsRecord, UUID> WALLET_ID = createField(DSL.name("wallet_id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>wallet.transactions.amount</code>.
-     */
-    public final TableField<TransactionsRecord, BigDecimal> AMOUNT = createField(DSL.name("amount"), SQLDataType.NUMERIC(10, 3).nullable(false), this, "");
-
-    /**
      * The column <code>wallet.transactions.operation_type</code>.
      */
     public final TableField<TransactionsRecord, String> OPERATION_TYPE = createField(DSL.name("operation_type"), SQLDataType.VARCHAR(63).nullable(false), this, "");

@@ -14,6 +14,7 @@ import kz.mukha.wallet.data.Tax
 import kz.mukha.wallet.data.TaxLayout
 import kz.mukha.wallet.data.TaxTotal
 import kz.mukha.wallet.data.Ticket
+import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -29,7 +30,7 @@ data class ReceiptDto(
 data class TicketDto(
     val transactionDate: LocalDateTime,
     val fiscalId: String,
-    val totalSum: Double,
+    val totalSum: BigDecimal,
     val operationType: Int,
     val operationTypeEnum: OperationTypeEnum = OperationTypeEnum.entries[operationType],
     val items: List<ItemDto>,
@@ -43,15 +44,15 @@ data class ItemDto(
 )
 
 data class CommodityDto(
-    val sum: Double,
-    val quantity: Double,
-    val price: Double,
+    val sum: BigDecimal,
+    val quantity: BigDecimal,
+    val price: BigDecimal,
 //    val measureUnitCode: String,
     val name: String,
 )
 
 data class PaymentDto(
-    val sum: Double,
+    val sum: BigDecimal,
     val paymentType: PaymentTypeEnum,
 )
 
@@ -115,26 +116,26 @@ fun main() {
             linkedKkmRequestId=null,
             linkedKkmRequestTime=null,
             domain= Domain(domainType=0),
-            totalSum=2580.0,
+            totalSum="2580.000".toBigDecimal(),
             operationType=2,
             operator= Operator(code=9, name="Касса 1у"),
-            takenSum=0.0,
-            changeSum=0.0,
+            takenSum="0.000".toBigDecimal(),
+            changeSum="0.000".toBigDecimal(),
             items= listOf(
-                Item(itemType=1, commodity= Commodity(sum=1290.0, sectionCode="1", quantity=1.00, price=1290.0,exciseStamp="", physicalLabel="", productId="0", barcode=null, measureUnitCode="796", code=0, taxes=listOf(
-                    Tax(sum=138.21, inTotalSum=true, layout= TaxLayout(type="НДС", rate=0.12))
+                Item(itemType=1, commodity= Commodity(sum="1290.000".toBigDecimal(), sectionCode="1", quantity="1.000".toBigDecimal(), price="1290.000".toBigDecimal(),exciseStamp="", physicalLabel="", productId="0", barcode=null, measureUnitCode="796", code=0, taxes=listOf(
+                    Tax(sum="138.210".toBigDecimal(), inTotalSum=true, layout= TaxLayout(type="НДС", rate=0.12))
                 ), name="Штрих мебельный (блистер), Белый, 002")),
-                Item(itemType=1, commodity=Commodity(sum=1290.0, sectionCode="1", quantity=1.00, price=1290.0, exciseStamp="", physicalLabel="", productId="0", barcode=null, measureUnitCode="796", code=0, taxes=listOf(
-                    Tax(sum=138.21, inTotalSum=true, layout= TaxLayout(type="НДС", rate=0.12))
+                Item(itemType=1, commodity=Commodity(sum="1290.000".toBigDecimal(), sectionCode="1", quantity="1.000".toBigDecimal(), price="1290.000".toBigDecimal(), exciseStamp="", physicalLabel="", productId="0", barcode=null, measureUnitCode="796", code=0, taxes=listOf(
+                    Tax(sum="138.210".toBigDecimal(), inTotalSum=true, layout= TaxLayout(type="НДС", rate=0.12))
                 ), name="Паста реставрационная (блистер), Белый, 002"))
             ),
-            payments= listOf(Payment(sum=2580.0, paymentType="CARD")),
+            payments= listOf(Payment(sum="2580.000".toBigDecimal(), paymentType="CARD")),
             taxes= listOf(), shiftDocumentNumber=null, requestPayload=null, payload=null),
         ticketDescription="transaction.ticket.sell, transaction.ticket.payment.type.card",
         orgTitle="ТОВАРИЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"МЕГАСТРОЙ АСТАНА DIY\"", orgId="090840015598",
         retailPlaceAddress="р-он Байконыр, Альмухана Сембинова 19/1", kkmSerialNumber="SWK00100844",
         kkmFnsId="010100344201", foundDate=LocalDateTime.parse("2024-05-12T13:21:31.041"),
-        taxesTotal= listOf(TaxTotal(sum=276.42, rate=0.12, name="")), totalDiscount=0.0, totalMarkup=0.0,
+        taxesTotal= listOf(TaxTotal(sum="276.420".toBigDecimal(), rate=0.12, name="")), totalDiscount=0.0, totalMarkup=0.0,
         measureUnits= mapOf("796" to "шт "), isForAnon=true
     )
     println(receipt.toDto())

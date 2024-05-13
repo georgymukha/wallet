@@ -104,10 +104,9 @@ class ReceiptProcessor {
     }
 
     private fun saveTransaction(transaction: Transaction) {
-        val tr: TransactionsRecord = TransactionsRecord(
+        val tr = TransactionsRecord(
             transaction.transactionId,
             transaction.walletId,
-            transaction.amount,
             transaction.operationType.toString(),
             transaction.description,
             transaction.transactionDate,
@@ -122,9 +121,9 @@ class ReceiptProcessor {
         )
 
         context.startTransaction()
-        val transactionId = context.insertInto(TRANSACTIONS)
+        context.insertInto(TRANSACTIONS)
             .set(tr)
-            .returning(TRANSACTIONS.TRANSACTION_ID)
+//            .returning(TRANSACTIONS.TRANSACTION_ID)
             .execute()
         context.commit()
     }
@@ -132,7 +131,7 @@ class ReceiptProcessor {
     private fun saveItems(items: List<TransactionItem>) {
         context.startTransaction()
         for (item in items) {
-            val tr: TransactionItemsRecord = TransactionItemsRecord(
+            val tr = TransactionItemsRecord(
                 item.transactionItemId,
                 item.transactionId,
                 item.commoditySum,
@@ -146,7 +145,7 @@ class ReceiptProcessor {
 
             context.insertInto(TRANSACTION_ITEMS)
                 .set(tr)
-                .returning(TRANSACTION_ITEMS.TRANSACTION_ITEM_ID)
+//                .returning(TRANSACTION_ITEMS.TRANSACTION_ITEM_ID)
                 .execute()
         }
         context.commit()
