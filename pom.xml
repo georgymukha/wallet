@@ -14,9 +14,12 @@
 	<name>wallet</name>
 	<description>Finance calculator for Kazakhstan</description>
 	<properties>
+		<postgres.password>[ENTER LOCAL PASSWORD HERE]</postgres.password>
 		<java.version>17</java.version>
 		<kotlin.version>1.9.23</kotlin.version>
+		<kotlinx.version>1.6.3</kotlinx.version>
 		<jackson.version>2.17.1</jackson.version>
+		<jooq.version>3.19.8</jooq.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -58,16 +61,36 @@
 			<artifactId>kotlin-stdlib</artifactId>
 			<version>${kotlin.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jetbrains.kotlinx</groupId>
+			<artifactId>kotlinx-serialization-json</artifactId>
+			<version>1.6.3</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jooq</groupId>
+			<artifactId>jooq</artifactId>
+			<version>${jooq.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jooq</groupId>
+			<artifactId>jooq-codegen-maven</artifactId>
+			<version>${jooq.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jooq</groupId>
+			<artifactId>jooq-meta</artifactId>
+			<version>${jooq.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -142,6 +165,7 @@
 					<compilerPlugins>
 						<plugin>spring</plugin>
 						<plugin>jpa</plugin>
+						<plugin>kotlinx-serialization</plugin>
 					</compilerPlugins>
 				</configuration>
 				<dependencies>
@@ -155,7 +179,76 @@
 						<artifactId>kotlin-maven-noarg</artifactId>
 						<version>${kotlin.version}</version>
 					</dependency>
+					<dependency>
+						<groupId>org.jetbrains.kotlin</groupId>
+						<artifactId>kotlin-maven-serialization</artifactId>
+						<version>${kotlin.version}</version>
+					</dependency>
 				</dependencies>
+			</plugin>
+			<plugin>
+				<!-- Specify the maven code generator plugin -->
+				<!-- Use org.jooq                for the Open Source Edition
+
+                     Note: Only the Open Source Edition is hosted on Maven Central.
+                           Install the others locally using the provided scripts, or access them from here: https://repo.jooq.org -->
+				<groupId>org.jooq</groupId>
+				<artifactId>jooq-codegen-maven</artifactId>
+				<version>${jooq.version}</version>
+
+				<executions>
+					<execution>
+						<id>jooq-codegen</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<jdbc>
+						<driver>org.postgresql.Driver</driver>
+						<url>jdbc:postgresql://aws-0-ap-south-1.pooler.supabase.com:5432/wallet</url>
+						<user>postgres.hvbnbrdwefiviufguppq</user>
+						<password>${postgres.password}</password>
+					</jdbc>
+					<generator>
+						<!-- See https://www.jooq.org/doc/3.8/manual/code-generation/codegen-configuration/ and https://www.jooq.org/doc/3.8/manual/code-generation/codegen-advanced/ -->
+						<!-- Or even better, https://www.jooq.org/doc/3.14/manual/code-generation/codegen-advanced/ -->
+						<database>
+							<includeTables>true</includeTables>
+							<includeInvisibleColumns>false</includeInvisibleColumns>
+							<includeEmbeddables>false</includeEmbeddables>
+							<includeRoutines>false</includeRoutines>
+							<includePackages>false</includePackages>
+							<includePackageRoutines>false</includePackageRoutines>
+							<includePackageUDTs>false</includePackageUDTs>
+							<includePackageConstants>false</includePackageConstants>
+							<includeUDTs>false</includeUDTs>
+							<!--<includeDomains>false</includeDomains>-->
+							<includeSequences>true</includeSequences>
+							<includeSystemSequences>true</includeSystemSequences>
+							<includePrimaryKeys>true</includePrimaryKeys>
+							<includeUniqueKeys>true</includeUniqueKeys>
+							<includeForeignKeys>true</includeForeignKeys>
+							<includeCheckConstraints>false</includeCheckConstraints>
+							<includeSystemCheckConstraints>false</includeSystemCheckConstraints>
+							<includeIndexes>false</includeIndexes> <!-- Yields NPE on active_nodes -->
+							<includeSystemIndexes>false</includeSystemIndexes>
+							<!-- Asterisk is to capture id sequences as well -->
+							<!-- ((?!_p\d+)(?!_old).)* to exclude _p99 partition and _old postfixes -->
+							<includes>.*</includes>
+							<inputSchema>wallet</inputSchema>
+						</database>
+						<target>
+							<packageName>kz.mukha.wallet.data.jooq.postgres</packageName>
+							<directory>src/main/kotlin</directory>
+						</target>
+						<generate>
+							<javaTimeTypes>true</javaTimeTypes>
+						</generate>
+					</generator>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
