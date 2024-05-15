@@ -1,9 +1,11 @@
 package kz.mukha.wallet.processor
 
 import kz.mukha.wallet.data.dto.WalletDto
+import kz.mukha.wallet.data.dto.toDto
 import kz.mukha.wallet.data.jooq.postgres.tables.Wallets.WALLETS
 import kz.mukha.wallet.data.jooq.postgres.tables.records.WalletsRecord
 import kz.mukha.wallet.domain.wallet.Wallet
+import kz.mukha.wallet.domain.wallet.toEntity
 import kz.mukha.wallet.supabase.DatabaseConnector
 import org.jooq.DSLContext
 import org.springframework.http.HttpStatus
@@ -23,30 +25,24 @@ class WalletProcessor {
 
     private val context: DSLContext = DatabaseConnector.connect()
 
-    @PostMapping("/wallet")
+    @PostMapping("/wallets")
     fun createWallet(@RequestBody wallet: WalletDto): ResponseEntity<String> {
-        TODO("Логика создания нового кошелька")
-        // нужно создать новый кошелек в базе данных и вернуть успешный ответ или сообщение об ошибке
+        val walletId = createWalletByWalletDto(wallet)
 
-        val walletId = UUID.randomUUID().toString()
         return ResponseEntity.status(HttpStatus.CREATED).body("Wallet created successfully with id: $walletId")
     }
 
     @GetMapping("/wallets")
-    fun getUserWallets(@RequestParam("userId") userId: UUID): ResponseEntity<List<Wallet>> {
-        TODO("Логика получения списка кошельков пользователя")
-        // нужно извлечь все кошельки пользователя из базы данных и вернуть их в ответе
+    fun getUserWallets(@RequestParam("userId") userId: UUID): ResponseEntity<List<WalletDto>> {
+        val wallets: List<WalletDto> = getUserWalletsByOwnerId(userId)
 
-        val wallets: List<Wallet> = listOf()
         return ResponseEntity.ok(wallets)
     }
 
-    @GetMapping("/wallet/{walletId}")
+    @GetMapping("/wallets/{walletId}")
     fun getWalletDetails(@PathVariable("walletId") walletId: UUID): ResponseEntity<Wallet> {
-        TODO("Логика получения информации о конкретном кошельке")
-        // нужно извлечь информацию о конкретном кошельке из базы данных и вернуть её в ответе
+        val wallet = getWalletById(walletId)
 
-        val wallet: Wallet? = null
         return if (wallet != null) {
             ResponseEntity.ok(wallet)
         } else {
@@ -54,38 +50,64 @@ class WalletProcessor {
         }
     }
 
-    @PutMapping("/wallet/{walletId}")
+    @PutMapping("/wallets/{walletId}")
     fun updateWallet(@PathVariable("walletId") walletId: UUID, @RequestBody wallet: WalletDto): ResponseEntity<String> {
-        TODO("Логика обновления информации о кошельке")
-        // нужно обновить информацию о кошельке в базе данных и вернуть успешный ответ или сообщение об ошибке
+        val actualRecord = getWalletById(walletId)
 
-        return ResponseEntity.ok("Wallet updated successfully")
+        val walletRecord = WalletsRecord(
+            walletId,
+            wallet.ownerId,
+            wallet.walletName,
+            wallet.currency,
+            wallet.createdAt,
+            wallet.updatedAt,
+            wallet.saveItems,
+        )
+        updateWallet(walletRecord)
+
+        return ResponseEntity.ok("Wallet with id: $walletId updated successfully")
     }
 
-    @DeleteMapping("/wallet/{walletId}")
+    @DeleteMapping("/wallets/{walletId}")
     fun deleteWallet(@PathVariable("walletId") walletId: UUID): ResponseEntity<String> {
-        TODO("Логика удаления кошелька")
-        // нужно удалить кошелек из базы данных и вернуть успешный ответ или сообщение об ошибке
+        deleteWalletById(walletId)
 
         return ResponseEntity.ok("Wallet deleted successfully")
     }
 
-    private fun createWallet(wallet: WalletsRecord) {
+    private fun createWalletByWalletDto(wallet: WalletDto): UUID {
+        val walletId: UUID = UUID.randomUUID()
+        val walletRecord = WalletsRecord(
+            walletId,
+            wallet.ownerId,
+            wallet.walletName,
+            wallet.currency,
+            wallet.createdAt,
+            wallet.updatedAt,
+            wallet.saveItems,
+        )
+
         context.insertInto(WALLETS)
-            .set(wallet)
+            .set(walletRecord)
             .execute()
+
+        return walletRecord.walletId
     }
 
-    private fun getUserWalletsByOwnerId(userId: UUID): List<WalletsRecord> {
-        return context.selectFrom(WALLETS)
+    private fun getUserWalletsByOwnerId(userId: UUID): List<WalletDto> {
+        val wallets = context.selectFrom(WALLETS)
             .where(WALLETS.OWNER_ID.eq(userId))
             .fetch()
+
+        return wallets.map { it.toDto() }
     }
 
-    private fun getWalletById(walletId: UUID): WalletsRecord? {
-        return context.selectFrom(WALLETS)
+    private fun getWalletById(walletId: UUID): Wallet? {
+        val wallet = context.selectFrom(WALLETS)
             .where(WALLETS.WALLET_ID.eq(walletId))
             .fetchOne()
+
+        return wallet?.toEntity()
     }
 
     private fun updateWallet(wallet: WalletsRecord) {
