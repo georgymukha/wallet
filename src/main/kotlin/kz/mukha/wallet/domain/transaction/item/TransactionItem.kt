@@ -1,4 +1,4 @@
-package kz.mukha.wallet.domain
+package kz.mukha.wallet.domain.transaction.item
 
 import kz.mukha.wallet.data.ItemTypeEnum
 import java.math.BigDecimal

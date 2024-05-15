@@ -6,10 +6,10 @@ import kz.mukha.wallet.data.jooq.postgres.tables.TransactionItems.TRANSACTION_IT
 import kz.mukha.wallet.data.jooq.postgres.tables.Transactions.TRANSACTIONS
 import kz.mukha.wallet.data.jooq.postgres.tables.records.TransactionItemsRecord
 import kz.mukha.wallet.data.jooq.postgres.tables.records.TransactionsRecord
-import kz.mukha.wallet.domain.Transaction
-import kz.mukha.wallet.domain.TransactionItem
-import kz.mukha.wallet.domain.toItems
-import kz.mukha.wallet.domain.toTransaction
+import kz.mukha.wallet.domain.transaction.Transaction
+import kz.mukha.wallet.domain.transaction.item.TransactionItem
+import kz.mukha.wallet.domain.transaction.toItems
+import kz.mukha.wallet.domain.transaction.toTransaction
 import kz.mukha.wallet.supabase.DatabaseConnector
 import org.jooq.DSLContext
 import org.springframework.http.HttpStatus

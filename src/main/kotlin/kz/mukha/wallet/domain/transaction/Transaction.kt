@@ -1,9 +1,9 @@
-package kz.mukha.wallet.domain
+package kz.mukha.wallet.domain.transaction
 
 import kz.mukha.wallet.data.ItemTypeEnum
 import kz.mukha.wallet.data.OperationType
-import kz.mukha.wallet.data.OperationTypeEnum
 import kz.mukha.wallet.data.Receipt
+import kz.mukha.wallet.domain.transaction.item.TransactionItem
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.UUID
@@ -43,17 +43,6 @@ fun Receipt.toTransaction(walletId: UUID): Transaction {
 }
 
 fun Receipt.toItems(transactionId: UUID): List<TransactionItem> {
-
-//    val transactionItemId: UUID
-//    val transactionId: UUID
-//    val itemType: ItemTypeEnum
-//    val commoditySum: BigDecimal
-//    val quantity: BigDecimal
-//    val price: BigDecimal
-//    val itemName: String
-//    val createdAt: LocalDateTime
-//    val updatedAt: LocalDateTime
-
 
     return this.ticket.items.map {
         val itemType = ItemTypeEnum.entries.find { enum -> enum.code == it.itemType }
